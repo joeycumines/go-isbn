@@ -28,7 +28,7 @@ func sum10(isbn string) (int, error) {
 		} else {
 			n, err := strconv.Atoi(string(v))
 			if err != nil {
-				return -1, fmt.Errorf("Failed to convert ISBN-10 character to int: %s", string(v))
+				return -1, fmt.Errorf("failed to convert isbn-10 character to int: %s", string(v))
 			}
 			s += n * w
 		}
@@ -48,7 +48,7 @@ func sum13(isbn string) (int, error) {
 	for _, v := range isbn {
 		n, err := strconv.Atoi(string(v))
 		if err != nil {
-			return -1, fmt.Errorf("Failed to convert ISBN-13 character to int: %s", string(v))
+			return -1, fmt.Errorf("failed to convert isbn-13 character to int: %s", string(v))
 		}
 		s += n * w
 		if w == 1 {
@@ -67,7 +67,7 @@ func sum13(isbn string) (int, error) {
 // (the digit) is ignored since that is what is being (re)calculated.
 func CheckDigit10(isbn10 string) (string, error) {
 	if len(isbn10) != 9 && len(isbn10) != 10 {
-		return "", fmt.Errorf("A string of length 9 or 10 is required to calculate the ISBN-10 check digit. Provided was: %s", isbn10)
+		return "", fmt.Errorf("a string of length 9 or 10 is required to calculate the isbn-10 check digit: invalid input: %s", isbn10)
 	}
 	s, err := sum10(isbn10[:9])
 	if err != nil {
@@ -87,7 +87,7 @@ func CheckDigit10(isbn10 string) (string, error) {
 // (the digit) is ignored since that is what is being (re)calculated.
 func CheckDigit13(isbn13 string) (string, error) {
 	if len(isbn13) != 12 && len(isbn13) != 13 {
-		return "", fmt.Errorf("A string of length 12 or 13 is required to calculate the ISBN-13 check digit. Provided was: %s", isbn13)
+		return "", fmt.Errorf("a string of length 12 or 13 is required to calculate the isbn-13 check digit: invalid input: %s", isbn13)
 	}
 	s, err := sum13(isbn13[:12])
 	if err != nil {
@@ -144,7 +144,7 @@ func Validate13(isbn13 string) bool {
 // characters (spaces or hyphens).
 func To13(isbn10 string) (string, error) {
 	if len(isbn10) != 9 && len(isbn10) != 10 {
-		return "", fmt.Errorf("A string of length 9 or 10 is required to convert an ISBN-10 to an ISBN-13. Provided was: %s", isbn10)
+		return "", fmt.Errorf("a string of length 9 or 10 is required to convert an isbn-10 to an isbn-13: invalid input: %s", isbn10)
 	}
 	isbn13 := "978" + isbn10[:9]
 	d, err := CheckDigit13(isbn13)
